@@ -8,9 +8,6 @@ Route::middleware('guest')->group(function () {
     Volt::route('login', 'auth.login')
         ->name('login');
 
-    Volt::route('register', 'auth.register')
-        ->name('register');
-
     Volt::route('forgot-password', 'auth.forgot-password')
         ->name('password.request');
 
@@ -22,6 +19,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Volt::route('verify-email', 'auth.verify-email')
         ->name('verification.notice');
+
+    Volt::route('register', 'auth.register')
+        ->name('register');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
         ->middleware(['signed', 'throttle:6,1'])
