@@ -13,9 +13,6 @@ export default defineConfig({
         tailwindcss(),
     ],
     server: {
-        host: '0.0.0.0',    // <-- listen on all IPs
-        port: 5173,         // <-- default Vite port
-        strictPort: true,
         cors: true,
     },
 });
