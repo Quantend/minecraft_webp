@@ -45,7 +45,7 @@
     </div>
 
     @if (session()->has('message'))
-        <div class="bg-green-600 text-white p-2 rounded mb-4">
+        <div class="text-green-600 my-4">
             {{ session('message') }}
         </div>
     @endif
@@ -246,7 +246,7 @@
                         can't be undone, are you sure?</h3>
 
                     <button wire:click="restoreBackup"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
                         Yes
                     </button>
                 @endif
@@ -255,13 +255,13 @@
                         version just came out, are you sure?</h3>
 
                     <button wire:click="updateMinecraftServer"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition">
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
                         Yes
                     </button>
                 @endif
 
                 <button wire:click="resetToggle"
-                        class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded transition">
+                        class="bg-gray-400 hover:bg-gray-500 mr-0 text-white font-semibold py-2 px-4 rounded transition">
                     Cancel
                 </button>
             </div>
