@@ -26,6 +26,11 @@ class MinecraftDashboard extends Component
 
     public function clearLogs()
     {
+        // inside clearLogs() before writing:
+        $phpUser = trim(shell_exec('whoami'));
+        $writable = is_writable($this->logPath) ? 'yes' : 'no';
+        logger("PHP user: {$phpUser}, is_writable: {$writable}", ['path' => $this->logPath]);
+
         if (file_exists($this->logPath) && is_writable($this->logPath)) {
             // Truncate the log file
             file_put_contents($this->logPath, '');
