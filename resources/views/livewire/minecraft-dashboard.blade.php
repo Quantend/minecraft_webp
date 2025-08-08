@@ -44,6 +44,12 @@
         </button>
     </div>
 
+    @if (session()->has('message'))
+        <div class="bg-green-600 text-white p-2 rounded mb-4">
+            {{ session('message') }}
+        </div>
+    @endif
+
     <!-- Banned IPs Table -->
     <h2 class="mt-8 font-bold text-lg text-gray-800 dark:text-gray-100">Banned IPs</h2>
     <table class="w-full text-left border-collapse border border-gray-300">

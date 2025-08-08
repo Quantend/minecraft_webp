@@ -57,6 +57,8 @@ class MinecraftDashboard extends Component
     public function restartServer()
     {
         exec('sudo /bin/systemctl restart minecraft.service');
+        $this->restartToggle = false;
+        session()->flash('message', 'Restarted server');
     }
 
     public function restoreBackupConfirm()
@@ -67,6 +69,8 @@ class MinecraftDashboard extends Component
     public function restoreBackup()
     {
         exec('sudo /usr/local/bin/restore_minecraft_backup.sh');
+        $this->backupToggle = false;
+        session()->flash('message', 'Restored last backup');
     }
 
     public function updateMinecraftServerConfirm()
@@ -77,6 +81,8 @@ class MinecraftDashboard extends Component
     public function updateMinecraftServer()
     {
         exec('sudo /usr/local/bin/update_minecraft.sh');
+        $this->updateToggle = false;
+        session()->flash('message', 'Updated Minecraft server (if there is an update)');
     }
 
     private function getUuidFromUsername($username)
