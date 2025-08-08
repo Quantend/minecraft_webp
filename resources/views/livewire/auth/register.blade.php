@@ -13,6 +13,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
+    public $admin = 0;
 
     /**
      * Handle an incoming registration request.
@@ -23,6 +24,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'admin' => ['required', 'boolean'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -86,6 +88,11 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 :placeholder="__('Confirm password')"
                 viewable
             />
+
+            <flux:select wire:model="admin" label="{{ __('Admin?') }}">
+                <flux:select.option value="0">{{ __('No') }}</flux:select.option>
+                <flux:select.option value="1">{{ __('Yes') }}</flux:select.option>
+            </flux:select>
 
             <div class="flex items-center justify-end">
                 <flux:button type="submit" variant="primary" class="w-full">
