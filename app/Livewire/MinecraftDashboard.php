@@ -9,6 +9,9 @@ class MinecraftDashboard extends Component
     public $logContent = '';
     public $logPath = '/opt/minecraft/logs/latest.log';
     public $pollLogs = false;
+    public $restartToggle = false;
+    public $backupToggle = false;
+    public $updateToggle = false;
 
     // Paths to JSON files
     public $banned_ips_path = '/opt/minecraft/banned-ips.json';
@@ -39,6 +42,43 @@ class MinecraftDashboard extends Component
         $this->loadJsonFiles();
     }
 
+    public function resetToggle()
+    {
+        $this->restartToggle = false;
+        $this->backupToggle = false;
+        $this->updateToggle = false;
+    }
+
+    public function restartServerConfirm()
+    {
+        $this->restartToggle = true;
+    }
+
+    public function restartServer()
+    {
+        exec('sudo /bin/systemctl restart minecraft.service');
+    }
+
+    public function restoreBackupConfirm()
+    {
+        $this->backupToggle = true;
+    }
+
+    public function restoreBackup()
+    {
+        exec('sudo /usr/local/bin/restore_minecraft_backup.sh');
+    }
+
+    public function updateMinecraftServerConfirm()
+    {
+        $this->updateToggle = true;
+    }
+
+    public function updateMinecraftServer()
+    {
+        exec('sudo /usr/local/bin/update_minecraft.sh');
+    }
+
     private function getUuidFromUsername($username)
     {
         $url = "https://playerdb.co/api/player/minecraft/" . urlencode($username);
@@ -58,12 +98,31 @@ class MinecraftDashboard extends Component
 
     public function getLogs()
     {
+        $maxBytes = 50 * 1024; // 50 KB max
+
         if (file_exists($this->logPath) && is_readable($this->logPath)) {
-            $this->logContent = file_get_contents($this->logPath);
+            $fileSize = filesize($this->logPath);
+            $handle = fopen($this->logPath, 'r');
+
+            if ($fileSize > $maxBytes) {
+                // Seek to the last $maxBytes of the file
+                fseek($handle, -$maxBytes, SEEK_END);
+            } else {
+                fseek($handle, 0);
+            }
+
+            $this->logContent = fread($handle, $maxBytes);
+            fclose($handle);
+
+            // Optional: prepend info about truncation if file was too big
+            if ($fileSize > $maxBytes) {
+                $this->logContent = "[... showing last {$maxBytes} bytes of log ...]\n" . $this->logContent;
+            }
         } else {
             $this->logContent = "Log file not found or not readable.";
         }
     }
+
 
     public function clearLogs()
     {
