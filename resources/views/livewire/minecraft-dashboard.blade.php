@@ -3,50 +3,44 @@
         {{ $logContent }}
     </div>
 
-    @if($pollLogs)
-        <div wire:poll="getLogs" class="mt-4">
-            <button
-                wire:click="togglePoll"
-                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition"
+    <div class="mt-4 space-x-2">
+        @if($pollLogs)
+            <button wire:poll="getLogs" wire:click="togglePoll"
+                    class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition"
             >
-                disable polling
+                Disable Polling Logs
             </button>
-        </div>
-    @else
-        <div class="mt-4 space-x-2">
+        @else
             <button
                 wire:click="togglePoll"
                 class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition"
             >
-                enable polling
+                Enable Polling Logs
             </button>
-            <button
-                wire:click="restartServerConfirm"
-                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition"
-            >
-                Restart
-            </button>
-            <button
-                wire:click="restoreBackupConfirm"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
-            >
-                Restore Backup
-            </button>
-            <button
-                wire:click="updateMinecraftServerConfirm"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition"
-            >
-                Update Minecraft
-            </button>
-        </div>
-    @endif
-
-    <div class="mt-4 space-x-2">
+        @endif
         <button
             wire:click="clearLogs"
             class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition"
         >
             Clear Logs
+        </button>
+        <button
+            wire:click="restartServerConfirm"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition"
+        >
+            Restart
+        </button>
+        <button
+            wire:click="restoreBackupConfirm"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+        >
+            Restore Backup
+        </button>
+        <button
+            wire:click="updateMinecraftServerConfirm"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition"
+        >
+            Update Minecraft
         </button>
     </div>
 
@@ -94,11 +88,11 @@
                 </select>
 
                 @if($newExpiresIpOption === 'custom')
-                    <input wire:model="newExpiresIp" type="datetime-local" class="mt-1 w-full border rounded p-1" />
+                    <input wire:model="newExpiresIp" type="datetime-local" class="mt-1 w-full border rounded p-1"/>
                 @endif
             </td>
             <td class="border border-gray-300 p-2">
-                <input wire:model="newReasonIp" type="text" placeholder="Reason" class="w-full p-1 border rounded" />
+                <input wire:model="newReasonIp" type="text" placeholder="Reason" class="w-full p-1 border rounded"/>
             </td>
             <td class="border border-gray-300 p-2">
                 <button wire:click="addBannedIp"
@@ -157,11 +151,11 @@
                 </select>
 
                 @if($newExpiresPlayerOption === 'custom')
-                    <input wire:model="newExpiresPlayer" type="datetime-local" class="mt-1 w-full border rounded p-1" />
+                    <input wire:model="newExpiresPlayer" type="datetime-local" class="mt-1 w-full border rounded p-1"/>
                 @endif
             </td>
             <td class="border border-gray-300 p-2">
-                <input wire:model="newReasonPlayer" type="text" placeholder="Reason" class="w-full p-1 border rounded" />
+                <input wire:model="newReasonPlayer" type="text" placeholder="Reason" class="w-full p-1 border rounded"/>
             </td>
             <td class="border border-gray-300 p-2">
                 <button wire:click="addBannedPlayer"
@@ -220,7 +214,8 @@
                 </select>
             </td>
             <td class="border border-gray-300 p-2">
-                <button wire:click="addOp" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 transition w-full">
+                <button wire:click="addOp"
+                        class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 transition w-full">
                     Add
                 </button>
             </td>
@@ -232,7 +227,8 @@
         <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-xl space-y-4">
                 @if($restartToggle)
-                    <h3 class="text-lg font-semibold mb-4">Restarting the server kicks all the players of the server, are you sure?</h3>
+                    <h3 class="text-lg font-semibold mb-4">Restarting the server kicks all the players of the server,
+                        are you sure?</h3>
 
                     <button wire:click="restartServer"
                             class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
@@ -240,7 +236,8 @@
                     </button>
                 @endif
                 @if($backupToggle)
-                    <h3 class="text-lg font-semibold mb-4">Restoring the last back up deletes all data since made and can't be undone, are you sure?</h3>
+                    <h3 class="text-lg font-semibold mb-4">Restoring the last back up deletes all data since made and
+                        can't be undone, are you sure?</h3>
 
                     <button wire:click="restoreBackup"
                             class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
@@ -248,7 +245,8 @@
                     </button>
                 @endif
                 @if($updateToggle)
-                    <h3 class="text-lg font-semibold mb-4">Updating the server probably does nothing unless a new version just came out, are you sure?</h3>
+                    <h3 class="text-lg font-semibold mb-4">Updating the server probably does nothing unless a new
+                        version just came out, are you sure?</h3>
 
                     <button wire:click="updateMinecraftServer"
                             class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition">

@@ -8,12 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-
-Route::get('dashboard2', MinecraftDashboard::class)->name('dashboard2');
+Route::get('dashboard', MinecraftDashboard::class)->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
