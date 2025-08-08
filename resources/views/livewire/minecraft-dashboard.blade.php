@@ -34,7 +34,7 @@
             wire:click="restoreBackupConfirm"
             class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
         >
-            Restore Backup
+            Restore Last Backup
         </button>
         <button
             wire:click="updateMinecraftServerConfirm"
@@ -49,6 +49,8 @@
             {{ session('message') }}
         </div>
     @endif
+
+    <p>**After banning or making an operator make sure to restart the server</p>
 
     <!-- Banned IPs Table -->
     <h2 class="mt-8 font-bold text-lg text-gray-800 dark:text-gray-100">Banned IPs</h2>
@@ -180,7 +182,7 @@
         <tr>
             <th class="border border-gray-300 p-2">UUID</th>
             <th class="border border-gray-300 p-2">Name</th>
-            <th class="border border-gray-300 p-2">Level</th>
+            <th class="border border-gray-300 p-2">Level <a href="https://stickypiston.co/account/knowledgebase/151/What-are-Minecraft-server-Operator-Levels.html" target="_blank" class="text-blue-500 underline">(Info)</a></th>
             <th class="border border-gray-300 p-2">Bypasses Player Limit</th>
             <th class="border border-gray-300 p-2">Actions</th>
         </tr>

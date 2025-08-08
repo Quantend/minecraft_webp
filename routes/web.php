@@ -8,9 +8,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('dashboard', MinecraftDashboard::class)->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', MinecraftDashboard::class)->name('dashboard');
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
