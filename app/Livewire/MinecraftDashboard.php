@@ -24,6 +24,18 @@ class MinecraftDashboard extends Component
         }
     }
 
+    public function clearLogs()
+    {
+        if (file_exists($this->logPath) && is_writable($this->logPath)) {
+            // Truncate the log file
+            file_put_contents($this->logPath, '');
+            // Update the log content in the UI
+            $this->logContent = '';
+        } else {
+            $this->logContent = "Cannot clear logs: file not found or not writable.";
+        }
+    }
+
     public function togglePoll()
     {
         $this->pollLogs = !$this->pollLogs;
