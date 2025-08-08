@@ -28,7 +28,7 @@
             wire:click="restartServerConfirm"
             class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition"
         >
-            Restart
+            Restart Server
         </button>
         <button
             wire:click="restoreBackupConfirm"
@@ -67,7 +67,7 @@
                 <td class="border border-gray-300 p-2">{{ $ip['reason'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">
                     <button wire:click="deleteBannedIp({{ $index }})"
-                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition">
+                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition w-full">
                         Delete
                     </button>
                 </td>
@@ -129,7 +129,7 @@
                 <td class="border border-gray-300 p-2">{{ $player['reason'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">
                     <button wire:click="deleteBannedPlayer({{ $index }})"
-                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition">
+                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition w-full">
                         Delete
                     </button>
                 </td>
@@ -188,7 +188,7 @@
                 <td class="border border-gray-300 p-2">{{ $op['bypassesPlayerLimit'] ? 'Yes' : 'No' }}</td>
                 <td class="border border-gray-300 p-2">
                     <button wire:click="deleteOp({{ $index }})"
-                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition">
+                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition w-full">
                         Delete
                     </button>
                 </td>
