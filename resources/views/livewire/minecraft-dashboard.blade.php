@@ -1,5 +1,7 @@
-<div class="whitespace-pre-wrap bg-gray-900 text-gray-200 p-4 font-mono max-h-[400px] overflow-y-auto">
-    {{ $logContent }}
+<div>
+    <div class="whitespace-pre-wrap bg-gray-900 text-gray-200 p-4 font-mono max-h-[400px] overflow-y-auto">
+        {{ $logContent }}
+    </div>
     @if($pollLogs)
         <div wire:poll="getLogs" class="mt-4">
             <button
