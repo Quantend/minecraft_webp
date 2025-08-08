@@ -116,7 +116,7 @@ class MinecraftDashboard extends Component
             // You might want to validate the IP here
             $this->banned_ips[] = [
                 'ip' => $this->newBannedIp,
-                'created' => time(),
+                'created' => date('Y-m-d H:i:s O'),
                 'source' => 'Web',
                 'expires' => $expires ?? 'forever',
                 'reason' => $this->newReasonIp,
@@ -151,7 +151,7 @@ class MinecraftDashboard extends Component
             $this->banned_players[] = [
                 'uuid' => $uuid ?? '',
                 'name' => $this->newBannedPlayer,
-                'created' => time(),
+                'created' => date('Y-m-d H:i:s O'),
                 'source' => 'Web',
                 'expires' => $expires ?? 'forever',
                 'reason' => $this->newReasonPlayer,

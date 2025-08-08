@@ -45,7 +45,7 @@
         @foreach($bannedIps as $index => $ip)
             <tr>
                 <td class="border border-gray-300 p-2">{{ $ip['ip'] ?? '' }}</td>
-                <td class="border border-gray-300 p-2">{{ date('Y-m-d H:i:s', $ip['created'] ?? 0) }}</td>
+                <td class="border border-gray-300 p-2">{{$ip['created'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $ip['source'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $ip['expires'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $ip['reason'] ?? '' }}</td>
@@ -105,7 +105,7 @@
             <tr>
                 <td class="border border-gray-300 p-2">{{ $player['uuid'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $player['name'] ?? '' }}</td>
-                <td class="border border-gray-300 p-2">{{ date('Y-m-d H:i:s', $player['created'] ?? 0) }}</td>
+                <td class="border border-gray-300 p-2">{{ $player['created'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $player['source'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $player['expires'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $player['reason'] ?? '' }}</td>
