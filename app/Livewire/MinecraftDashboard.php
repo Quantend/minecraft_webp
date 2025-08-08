@@ -105,16 +105,20 @@ class MinecraftDashboard extends Component
     // Add new banned IP
     public function addBannedIp()
     {
+        if ($this->newExpiresIpOption === 'forever') {
+            $expires = 'forever';
+        } elseif ($this->newExpiresIpOption === 'custom' && !empty($this->newExpiresIp)) {
+            // Convert to full timestamp
+            $expires = date('Y-m-d H:i:s O', strtotime($this->newExpiresIp));
+        }
+
         if ($this->newBannedIp) {
-            if ($this->newExpiresIpOption === 'forever') {
-                $this->newExpiresIp = 'forever';
-            }
             // You might want to validate the IP here
             $this->banned_ips[] = [
                 'ip' => $this->newBannedIp,
                 'created' => time(),
                 'source' => 'Web',
-                'expires' => $this->newExpiresIp,
+                'expires' => $expires ?? 'forever',
                 'reason' => $this->newReasonIp,
             ];
             $this->saveJson($this->banned_ips_path, $this->banned_ips);
@@ -136,7 +140,10 @@ class MinecraftDashboard extends Component
     public function addBannedPlayer()
     {
         if ($this->newExpiresPlayerOption === 'forever') {
-            $this->newExpiresPlayer = 'forever';
+            $expires = 'forever';
+        } elseif ($this->newExpiresPlayerOption === 'custom' && !empty($this->newExpiresPlayer)) {
+            // Convert to full timestamp
+            $expires = date('Y-m-d H:i:s O', strtotime($this->newExpiresPlayer));
         }
 
         if ($this->newBannedPlayer) {
@@ -146,11 +153,14 @@ class MinecraftDashboard extends Component
                 'name' => $this->newBannedPlayer,
                 'created' => time(),
                 'source' => 'Web',
-                'expires' => $this->newExpiresPlayer,
+                'expires' => $expires ?? 'forever',
                 'reason' => $this->newReasonPlayer,
             ];
             $this->saveJson($this->banned_players_path, $this->banned_players);
             $this->newBannedPlayer = '';
+            $this->newExpiresPlayer = '';
+            $this->newReasonPlayer = '';
+            $this->newExpiresPlayerOption = '';
         }
     }
 
