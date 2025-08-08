@@ -22,14 +22,38 @@ class MinecraftDashboard extends Component
 
     // Input fields for adding new entries
     public $newBannedIp = '';
+    public $newExpiresIpOption;
+    public $newExpiresIp = '';
+    public $newReasonIp = '';
     public $newBannedPlayer = '';
+    public $newExpiresPlayerOption;
+    public $newExpiresPlayer = '';
+    public $newReasonPlayer = '';
     public $newOpName = '';
-    public $newOpUuid = '';
+    public $newLevel = 4;
+    public $newPlayerLimit = false;
 
     public function mount()
     {
         $this->getLogs();
         $this->loadJsonFiles();
+    }
+
+    private function getUuidFromUsername($username)
+    {
+        $url = "https://playerdb.co/api/player/minecraft/" . urlencode($username);
+        $json = @file_get_contents($url);
+        if ($json === false) {
+            return null; // error fetching
+        }
+
+        $data = json_decode($json, true);
+
+        if (isset($data['data']['player']['id'])) {
+            return $data['data']['player']['id'];
+        }
+
+        return null; // uuid not found
     }
 
     public function getLogs()
@@ -82,10 +106,22 @@ class MinecraftDashboard extends Component
     public function addBannedIp()
     {
         if ($this->newBannedIp) {
+            if ($this->newExpiresIpOption === 'forever') {
+                $this->newExpiresIp = 'forever';
+            }
             // You might want to validate the IP here
-            $this->banned_ips[] = ['ip' => $this->newBannedIp, 'created' => time(), 'source' => 'Web'];
+            $this->banned_ips[] = [
+                'ip' => $this->newBannedIp,
+                'created' => time(),
+                'source' => 'Web',
+                'expires' => $this->newExpiresIp,
+                'reason' => $this->newReasonIp,
+            ];
             $this->saveJson($this->banned_ips_path, $this->banned_ips);
             $this->newBannedIp = '';
+            $this->newExpiresIp = '';
+            $this->newReasonIp = '';
+            $this->newExpiresIpOption = '';
         }
     }
 
@@ -99,8 +135,20 @@ class MinecraftDashboard extends Component
     // Add new banned player
     public function addBannedPlayer()
     {
+        if ($this->newExpiresPlayerOption === 'forever') {
+            $this->newExpiresPlayer = 'forever';
+        }
+
         if ($this->newBannedPlayer) {
-            $this->banned_players[] = ['uuid' => '', 'name' => $this->newBannedPlayer, 'created' => time(), 'source' => 'Web'];
+            $uuid = $this->getUuidFromUsername($this->newBannedPlayer);
+            $this->banned_players[] = [
+                'uuid' => $uuid ?? '',
+                'name' => $this->newBannedPlayer,
+                'created' => time(),
+                'source' => 'Web',
+                'expires' => $this->newExpiresPlayer,
+                'reason' => $this->newReasonPlayer,
+            ];
             $this->saveJson($this->banned_players_path, $this->banned_players);
             $this->newBannedPlayer = '';
         }
@@ -116,16 +164,21 @@ class MinecraftDashboard extends Component
     // Add new operator
     public function addOp()
     {
-        if ($this->newOpName && $this->newOpUuid) {
-            $this->ops[] = [
-                'uuid' => $this->newOpUuid,
-                'name' => $this->newOpName,
-                'level' => 4,
-                'bypassesPlayerLimit' => false
-            ];
-            $this->saveJson($this->ops_path, $this->ops);
-            $this->newOpName = '';
-            $this->newOpUuid = '';
+        if ($this->newOpName) {
+            $uuid = $this->getUuidFromUsername($this->newOpName);
+            if ($uuid) {
+                $this->ops[] = [
+                    'uuid' => $uuid,
+                    'name' => $this->newOpName,
+                    'level' => $this->newLevel,
+                    'bypassesPlayerLimit' => $this->newPlayerLimit
+                ];
+                $this->saveJson($this->ops_path, $this->ops);
+                $this->newOpName = '';
+            } else {
+                // Handle error: UUID not found
+                session()->flash('error', 'Could not find UUID for this player name.');
+            }
         }
     }
 

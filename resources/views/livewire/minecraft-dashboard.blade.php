@@ -36,6 +36,8 @@
             <th class="border border-gray-300 p-2">IP</th>
             <th class="border border-gray-300 p-2">Created</th>
             <th class="border border-gray-300 p-2">Source</th>
+            <th class="border border-gray-300 p-2">Expires</th>
+            <th class="border border-gray-300 p-2">Reason</th>
             <th class="border border-gray-300 p-2">Actions</th>
         </tr>
         </thead>
@@ -46,18 +48,37 @@
                 <td class="border border-gray-300 p-2">{{ date('Y-m-d H:i:s', $ip['created'] ?? 0) }}</td>
                 <td class="border border-gray-300 p-2">{{ $ip['source'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">
-                    <button wire:click="deleteBannedIp({{ $index }})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+                    <button wire:click="deleteBannedIp({{ $index }})"
+                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete
+                    </button>
                 </td>
             </tr>
         @endforeach
         <tr>
             <td class="border border-gray-300 p-2">
-                <input wire:model.defer="newBannedIp" type="text" placeholder="New IP" class="w-full p-1 border rounded" />
+                <input wire:model="newBannedIp" type="text" placeholder="New IP"
+                       class="w-full p-1 border rounded"/>
             </td>
             <td class="border border-gray-300 p-2"></td>
             <td class="border border-gray-300 p-2"></td>
             <td class="border border-gray-300 p-2">
-                <button wire:click="addBannedIp" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Add</button>
+                <select wire:model="newExpiresIpOption" class="border rounded p-1">
+                    <option value="">Select expiration</option>
+                    <option value="forever">Forever</option>
+                    <option value="custom">Custom date & time</option>
+                </select>
+
+                @if($newExpiresIpOption === 'custom')
+                    <input wire:model="newExpiresIp" type="datetime-local" class="mt-1" />
+                @endif
+            </td>
+            <td class="border border-gray-300 p-2">
+                <input wire:model="newReasonIp" type="text" placeholder="Reason" />
+            </td>
+            <td class="border border-gray-300 p-2">
+                <button wire:click="addBannedIp" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">
+                    Add
+                </button>
             </td>
         </tr>
         </tbody>
@@ -72,6 +93,8 @@
             <th class="border border-gray-300 p-2">Name</th>
             <th class="border border-gray-300 p-2">Created</th>
             <th class="border border-gray-300 p-2">Source</th>
+            <th class="border border-gray-300 p-2">Expires</th>
+            <th class="border border-gray-300 p-2">Reason</th>
             <th class="border border-gray-300 p-2">Actions</th>
         </tr>
         </thead>
@@ -83,19 +106,38 @@
                 <td class="border border-gray-300 p-2">{{ date('Y-m-d H:i:s', $player['created'] ?? 0) }}</td>
                 <td class="border border-gray-300 p-2">{{ $player['source'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">
-                    <button wire:click="deleteBannedPlayer({{ $index }})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+                    <button wire:click="deleteBannedPlayer({{ $index }})"
+                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete
+                    </button>
                 </td>
             </tr>
         @endforeach
         <tr>
             <td class="border border-gray-300 p-2"></td>
             <td class="border border-gray-300 p-2">
-                <input wire:model.defer="newBannedPlayer" type="text" placeholder="New Player Name" class="w-full p-1 border rounded" />
+                <input wire:model="newBannedPlayer" type="text" placeholder="New Player Name"
+                       class="w-full p-1 border rounded"/>
             </td>
             <td class="border border-gray-300 p-2"></td>
             <td class="border border-gray-300 p-2"></td>
             <td class="border border-gray-300 p-2">
-                <button wire:click="addBannedPlayer" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Add</button>
+                <select wire:model="newExpiresPlayerOption" class="border rounded p-1">
+                    <option value="">Select expiration</option>
+                    <option value="forever">Forever</option>
+                    <option value="custom">Custom date & time</option>
+                </select>
+
+                @if($newExpiresPlayerOption === 'custom')
+                    <input wire:model="newExpiresPlayer" type="datetime-local" class="mt-1" />
+                @endif
+            </td>
+            <td class="border border-gray-300 p-2">
+                <input wire:model="newReasonPlayer" type="text" placeholder="Reason" />
+            </td>
+            <td class="border border-gray-300 p-2">
+                <button wire:click="addBannedPlayer"
+                        class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Add
+                </button>
             </td>
         </tr>
         </tbody>
@@ -121,21 +163,34 @@
                 <td class="border border-gray-300 p-2">{{ $op['level'] ?? '' }}</td>
                 <td class="border border-gray-300 p-2">{{ $op['bypassesPlayerLimit'] ? 'Yes' : 'No' }}</td>
                 <td class="border border-gray-300 p-2">
-                    <button wire:click="deleteOp({{ $index }})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+                    <button wire:click="deleteOp({{ $index }})"
+                            class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete
+                    </button>
                 </td>
             </tr>
         @endforeach
         <tr>
+            <td class="border border-gray-300 p-2"></td>
             <td class="border border-gray-300 p-2">
-                <input wire:model.defer="newOpUuid" type="text" placeholder="UUID" class="w-full p-1 border rounded" />
+                <input wire:model="newOpName" type="text" placeholder="Name" class="w-full p-1 border rounded"/>
             </td>
             <td class="border border-gray-300 p-2">
-                <input wire:model.defer="newOpName" type="text" placeholder="Name" class="w-full p-1 border rounded" />
+                <select wire:model="newLevel" name="number">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
             </td>
-            <td class="border border-gray-300 p-2">4</td>
-            <td class="border border-gray-300 p-2">No</td>
             <td class="border border-gray-300 p-2">
-                <button wire:click="addOp" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Add</button>
+                <select wire:model="newPlayerLimit" name="boolean">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </td>
+            <td class="border border-gray-300 p-2">
+                <button wire:click="addOp" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Add
+                </button>
             </td>
         </tr>
         </tbody>
