@@ -6,7 +6,7 @@
     <div class="mt-4 space-x-2">
         @if($pollLogs)
             <button wire:poll="getLogs" wire:click="togglePoll"
-                    class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition"
+                    class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition"
             >
                 Disable Polling Logs
             </button>
