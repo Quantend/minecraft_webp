@@ -29,7 +29,8 @@ class MinecraftDashboard extends Component
         // inside clearLogs() before writing:
         $phpUser = trim(shell_exec('whoami'));
         $writable = is_writable($this->logPath) ? 'yes' : 'no';
-        logger("PHP user: {$phpUser}, is_writable: {$writable}", ['path' => $this->logPath]);
+
+        $this->logContent = "PHP user: {$phpUser}, is_writable: {$writable}";
 
         if (file_exists($this->logPath) && is_writable($this->logPath)) {
             // Truncate the log file
@@ -37,7 +38,8 @@ class MinecraftDashboard extends Component
             // Update the log content in the UI
             $this->logContent = '';
         } else {
-            $this->logContent = "Cannot clear logs: file not found or not writable.";
+            logger("PHP user: {$phpUser}, is_writable: {$writable}", ['path' => $this->logPath]);
+//            $this->logContent = "Cannot clear logs: file not found or not writable.";
         }
     }
 
