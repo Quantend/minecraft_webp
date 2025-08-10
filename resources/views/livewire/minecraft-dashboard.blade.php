@@ -306,10 +306,6 @@
                         </button>
                     </div>
                 @endif
-
-                <div wire:loading class="mt-4 text-center text-gray-600 italic">
-                    Running command, please wait...
-                </div>
             </div>
         </div>
     @endif

@@ -60,8 +60,8 @@ class MinecraftDashboard extends Component
     public function restartServer()
     {
         $this->restartToggle = false;
-        exec('sudo /bin/systemctl restart minecraft.service');
-        session()->flash('message', 'Restarted server');
+        exec('sudo /bin/systemctl restart minecraft.service' . " > /dev/null 2>&1 &");
+        session()->flash('message', 'Script running/ran: Restart Server');
     }
 
     public function restoreBackupConfirm()
@@ -72,8 +72,8 @@ class MinecraftDashboard extends Component
     public function restoreBackup()
     {
         $this->backupToggle = false;
-        exec('sudo /usr/local/bin/restore_minecraft_backup.sh');
-        session()->flash('message', 'Restored last backup');
+        exec('sudo /usr/local/bin/restore_minecraft_backup.sh' . " > /dev/null 2>&1 &");
+        session()->flash('message', 'Script running/ran: Restored last backup');
     }
 
     public function updateMinecraftServerConfirm()
@@ -84,8 +84,8 @@ class MinecraftDashboard extends Component
     public function updateMinecraftServer()
     {
         $this->updateToggle = false;
-        exec('sudo /usr/local/bin/update_minecraft.sh');
-        session()->flash('message', 'Updated Minecraft server (if there is an update)');
+        exec('sudo /usr/local/bin/update_minecraft.sh' . " > /dev/null 2>&1 &");
+        session()->flash('message', 'script running/ran: Updated Minecraft server (if there is an update)');
     }
 
     public function newWorldConfirm()
@@ -95,13 +95,13 @@ class MinecraftDashboard extends Component
 
     public function newWorld()
     {
-        $this->updateToggle = false;
+        $this->newWorldToggle = false;
         if ($this->seed) {
             exec("sudo /usr/local/bin/new_world.sh " . escapeshellarg($this->seed) . " > /dev/null 2>&1 &");
-            session()->flash('message', "Created new world with seed {$this->seed}");
+            session()->flash('message', "script running/ran: Created new world with seed {$this->seed}");
         } else {
             exec('sudo /usr/local/bin/new_world.sh');
-            session()->flash('message', 'Created new world with random seed');
+            session()->flash('message', 'script running/ran: Created new world with random seed');
         }
         $this->seed = null;
     }
