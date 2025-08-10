@@ -12,6 +12,7 @@ class MinecraftDashboard extends Component
     public $restartToggle = false;
     public $backupToggle = false;
     public $updateToggle = false;
+    public $newWorldToggle = false;
 
     // Paths to JSON files
     public $banned_ips_path = '/opt/minecraft/banned-ips.json';
@@ -47,6 +48,7 @@ class MinecraftDashboard extends Component
         $this->restartToggle = false;
         $this->backupToggle = false;
         $this->updateToggle = false;
+        $this->newWorldToggle = false;
     }
 
     public function restartServerConfirm()
@@ -83,6 +85,18 @@ class MinecraftDashboard extends Component
         exec('sudo /usr/local/bin/update_minecraft.sh');
         $this->updateToggle = false;
         session()->flash('message', 'Updated Minecraft server (if there is an update)');
+    }
+
+    public function newWorldConfirm()
+    {
+        $this->newWorldToggle = true;
+    }
+
+    public function newWorld()
+    {
+        exec('sudo /usr/local/bin/new_world.sh');
+        $this->updateToggle = false;
+        session()->flash('message', 'Created new world');
     }
 
     private function getUuidFromUsername($username)

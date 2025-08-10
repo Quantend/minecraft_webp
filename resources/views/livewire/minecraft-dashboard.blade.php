@@ -43,6 +43,12 @@
             >
                 Update Minecraft
             </button>
+            <button
+                wire:click="newWorldConfirm"
+                class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded transition"
+            >
+                Create New World
+            </button>
         @endif
     </div>
 
@@ -235,7 +241,7 @@
         </tbody>
     </table>
 
-    @if($restartToggle || $backupToggle || $updateToggle)
+    @if($restartToggle || $backupToggle || $updateToggle || $newWorldToggle)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-xl space-y-4">
                 @if($restartToggle)
@@ -261,6 +267,15 @@
                         version just came out, are you sure?</h3>
 
                     <button wire:click="updateMinecraftServer"
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
+                        Yes
+                    </button>
+                @endif
+                @if($newWorldToggle)
+                    <h3 class="text-lg font-semibold mb-4">Creating a new world deletes the previous world and all the
+                        player data in it, are you sure?</h3>
+
+                    <button wire:click="newWorld"
                             class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
                         Yes
                     </button>
