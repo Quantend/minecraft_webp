@@ -97,7 +97,7 @@ class MinecraftDashboard extends Component
     {
         $this->updateToggle = false;
         if ($this->seed) {
-            exec("sudo /usr/local/bin/new_world.sh " . escapeshellarg($this->seed));
+            exec("sudo /usr/local/bin/new_world.sh " . escapeshellarg($this->seed) . " > /dev/null 2>&1 &");
             session()->flash('message', "Created new world with seed {$this->seed}");
         } else {
             exec('sudo /usr/local/bin/new_world.sh');
