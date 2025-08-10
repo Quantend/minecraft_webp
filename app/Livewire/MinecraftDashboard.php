@@ -100,7 +100,7 @@ class MinecraftDashboard extends Component
             exec("sudo /usr/local/bin/new_world.sh " . escapeshellarg($this->seed) . " > /dev/null 2>&1 &");
             session()->flash('message', "script running/ran: Created new world with seed {$this->seed}");
         } else {
-            exec('sudo /usr/local/bin/new_world.sh');
+            exec('sudo /usr/local/bin/new_world.sh' . " > /dev/null 2>&1 &");
             session()->flash('message', 'script running/ran: Created new world with random seed');
         }
         $this->seed = null;
