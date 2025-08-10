@@ -13,6 +13,7 @@ class MinecraftDashboard extends Component
     public $backupToggle = false;
     public $updateToggle = false;
     public $newWorldToggle = false;
+    public $seed = null;
 
     // Paths to JSON files
     public $banned_ips_path = '/opt/minecraft/banned-ips.json';
@@ -92,11 +93,17 @@ class MinecraftDashboard extends Component
         $this->newWorldToggle = true;
     }
 
-    public function newWorld()
+    public function newWorld($seed = null)
     {
         $this->updateToggle = false;
-        exec('sudo /usr/local/bin/new_world.sh');
-        session()->flash('message', 'Created new world');
+        if ($this->seed) {
+            exec("sudo /usr/local/bin/newmcworld " . escapeshellarg($this->seed));
+            session()->flash('message', "Created new world with seed {$this->seed}");
+        } else {
+            exec('sudo /usr/local/bin/newmcworld');
+            session()->flash('message', 'Created new world with random seed');
+        }
+        $this->seed = null;
     }
 
     private function getUuidFromUsername($username)

@@ -275,6 +275,8 @@
                     <h3 class="text-lg font-semibold mb-4">Creating a new world deletes the previous world and all the
                         player data in it, are you sure?</h3>
 
+                    <input type="text" wire:model="seed" placeholder="Enter seed (optional)">
+
                     <button wire:click="newWorld"
                             class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
                         Yes
