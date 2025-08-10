@@ -58,8 +58,8 @@ class MinecraftDashboard extends Component
 
     public function restartServer()
     {
-        exec('sudo /bin/systemctl restart minecraft.service');
         $this->restartToggle = false;
+        exec('sudo /bin/systemctl restart minecraft.service');
         session()->flash('message', 'Restarted server');
     }
 
@@ -70,8 +70,8 @@ class MinecraftDashboard extends Component
 
     public function restoreBackup()
     {
-        exec('sudo /usr/local/bin/restore_minecraft_backup.sh');
         $this->backupToggle = false;
+        exec('sudo /usr/local/bin/restore_minecraft_backup.sh');
         session()->flash('message', 'Restored last backup');
     }
 
@@ -82,8 +82,8 @@ class MinecraftDashboard extends Component
 
     public function updateMinecraftServer()
     {
-        exec('sudo /usr/local/bin/update_minecraft.sh');
         $this->updateToggle = false;
+        exec('sudo /usr/local/bin/update_minecraft.sh');
         session()->flash('message', 'Updated Minecraft server (if there is an update)');
     }
 
@@ -94,8 +94,8 @@ class MinecraftDashboard extends Component
 
     public function newWorld()
     {
-        exec('sudo /usr/local/bin/new_world.sh');
         $this->updateToggle = false;
+        exec('sudo /usr/local/bin/new_world.sh');
         session()->flash('message', 'Created new world');
     }
 
