@@ -57,9 +57,6 @@
             {{ session('message') }}
         </div>
     @endif
-    <div wire:loading wire:target="restartServer" class="text-green-600 my-4">
-        Restarting server...
-    </div>
 
     <p>**After banning or making an operator make sure to restart the server</p>
 
@@ -288,6 +285,10 @@
                         class="bg-gray-400 hover:bg-gray-500 mr-0 text-white font-semibold py-2 px-4 rounded transition">
                     Cancel
                 </button>
+
+                <div wire:loading class="text-green-600 my-4">
+                    Running command, please wait...
+                </div>
             </div>
         </div>
     @endif
