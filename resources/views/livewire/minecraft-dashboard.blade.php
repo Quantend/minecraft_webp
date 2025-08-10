@@ -286,7 +286,7 @@
                     Cancel
                 </button>
 
-                <div wire:loading class="text-green-600 my-4">
+                <div wire:loading class="mt-4">
                     Running command, please wait...
                 </div>
             </div>
