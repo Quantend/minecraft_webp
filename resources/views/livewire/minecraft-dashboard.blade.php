@@ -243,52 +243,71 @@
 
     @if($restartToggle || $backupToggle || $updateToggle || $newWorldToggle)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-xl space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-xl space-y-6">
+
                 @if($restartToggle)
-                    <h3 class="text-lg font-semibold mb-4">Restarting the server kicks all the players of the server,
-                        are you sure?</h3>
+                    <h3 class="text-lg font-semibold">Restarting the server kicks all the players of the server, are you sure?</h3>
 
-                    <button wire:click="restartServer"
-                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
-                        Yes
-                    </button>
+                    <div class="flex space-x-4">
+                        <button wire:click="restartServer"
+                                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Yes
+                        </button>
+                        <button wire:click="resetToggle"
+                                class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Cancel
+                        </button>
+                    </div>
                 @endif
+
                 @if($backupToggle)
-                    <h3 class="text-lg font-semibold mb-4">Restoring the last back up deletes all data since made and
-                        can't be undone, are you sure?</h3>
+                    <h3 class="text-lg font-semibold">Restoring the last back up deletes all data since made and can't be undone, are you sure?</h3>
 
-                    <button wire:click="restoreBackup"
-                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
-                        Yes
-                    </button>
+                    <div class="flex space-x-4">
+                        <button wire:click="restoreBackup"
+                                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Yes
+                        </button>
+                        <button wire:click="resetToggle"
+                                class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Cancel
+                        </button>
+                    </div>
                 @endif
+
                 @if($updateToggle)
-                    <h3 class="text-lg font-semibold mb-4">Updating the server probably does nothing unless a new
-                        version just came out, are you sure?</h3>
+                    <h3 class="text-lg font-semibold">Updating the server probably does nothing unless a new version just came out, are you sure?</h3>
 
-                    <button wire:click="updateMinecraftServer"
-                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
-                        Yes
-                    </button>
+                    <div class="flex space-x-4">
+                        <button wire:click="updateMinecraftServer"
+                                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Yes
+                        </button>
+                        <button wire:click="resetToggle"
+                                class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Cancel
+                        </button>
+                    </div>
                 @endif
+
                 @if($newWorldToggle)
-                    <h3 class="text-lg font-semibold mb-4">Creating a new world deletes the previous world and all the
-                        player data in it, are you sure?</h3>
+                    <h3 class="text-lg font-semibold mb-2">Creating a new world deletes the previous world and all the player data in it, are you sure?</h3>
 
-                    <input type="text" wire:model="seed" placeholder="Enter seed (optional)">
+                    <input type="text" wire:model="seed" placeholder="Enter seed (optional)" class="w-full p-2 border rounded mb-4" />
 
-                    <button wire:click="newWorld"
-                            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition">
-                        Yes
-                    </button>
+                    <div class="flex space-x-4">
+                        <button wire:click="newWorld"
+                                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Yes
+                        </button>
+                        <button wire:click="resetToggle"
+                                class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded transition flex-1">
+                            Cancel
+                        </button>
+                    </div>
                 @endif
 
-                <button wire:click="resetToggle"
-                        class="bg-gray-400 hover:bg-gray-500 mr-0 text-white font-semibold py-2 px-4 rounded transition">
-                    Cancel
-                </button>
-
-                <div wire:loading class="mt-4">
+                <div wire:loading class="mt-4 text-center text-gray-600 italic">
                     Running command, please wait...
                 </div>
             </div>
